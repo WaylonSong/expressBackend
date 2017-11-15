@@ -1,0 +1,80 @@
+package com.cpu.controller;
+
+import com.cpu.model.${simpleClassName};
+import com.cpu.service.${simpleClassName}CrudService;
+import com.cpu.util.ObjectNullCheck;
+import com.cpu.util.PageDecorator;
+import com.cpu.util.PageUtil;
+import com.cpu.util.Result;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.net.URLDecoder;
+
+/**
+* Created by song.
+*/
+@Controller
+@RequestMapping("/${object}")
+public class ${simpleClassName}CrudController extends BaseController {
+
+    @Resource
+    ${simpleClassName}CrudService ${object}CrudService;
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public ${simpleClassName} view(@PathVariable java.lang.Integer id, HttpServletRequest request){
+        return ObjectNullCheck.getNonNullObject(${simpleClassName}.class, ${object}CrudService.get(id));
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    @ResponseBody
+    public Result create(@RequestBody ${simpleClassName} ${object}, HttpServletRequest request){
+        int opId = ${object}CrudService.add(${object});
+        return responseById(opId, "创建失败");
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @ResponseBody
+    public Result update(@PathVariable java.lang.Integer id, @RequestBody ${simpleClassName} ${object}, HttpServletRequest request){
+        int opId = ${object}CrudService.update(${object});
+        return responseById(opId, "更新失败");
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public Result delete(@PathVariable java.lang.Integer id, HttpServletRequest request){
+        int opId = ${object}CrudService.delete(id);
+        return responseById(opId, "删除失败");
+    }
+
+    @RequestMapping(value = "/list/{pageNum}", method = RequestMethod.GET)
+    @ResponseBody
+    public PageDecorator<${simpleClassName}> viewList(@PathVariable int pageNum, String q, String asc, String desc, HttpServletRequest request/*,Model model*/){
+        if(q!=null)
+        q = URLDecoder.decode(q);
+        final PageRequest pageRequest = new PageRequest(pageNum-1, PageUtil.PAGE_SIZE);
+        PageDecorator pageDecorator = PageUtil.pageWrap(${object}CrudService.getList(pageRequest, q, asc, desc));
+        return pageDecorator;
+    }
+
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    public String redirectAdd(){
+        return "${object}/add";
+    }
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public String redirectEdit(){
+        return "${object}/edit";
+    }
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    public String redirectDelete(){
+        return "${object}/delete";
+    }
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public String redirectList(){
+        return "${object}/list";
+    }
+}

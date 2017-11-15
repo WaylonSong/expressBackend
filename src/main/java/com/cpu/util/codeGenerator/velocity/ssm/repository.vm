@@ -1,0 +1,12 @@
+package com.cpu.repository.hiber;
+
+import com.cpu.model.${simpleClassName};
+import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.stereotype.Repository;
+
+/**
+* Created by song.
+*/
+@Repository
+    public interface ${simpleClassName}Repository extends PagingAndSortingRepository<${simpleClassName}, Integer> {
+}

@@ -1,0 +1,33 @@
+<!-- Author: Song -->
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Item List</title>
+    <script src="/js/bootstrapCssWrapper-bundle.js"></script>
+</head>
+<body>
+<div id="root">
+</div>
+<div id="example">
+</div>
+<script type="text/javascript">
+    var form_title = "商品列表";
+    var pageParas = {
+        pageType:"itemList",
+        url:"/item/list",
+        editUrl:"/",
+        addUrl:"/item/add",
+        columnFilter : [
+            {name:'id', alias:'商品编号'},
+            {name:'name', alias:'商品名称'},
+            {name:'description', alias:'商品描述'},
+            {name:'type', alias:'商品类型'},
+        ],
+        searchBar: false,
+        identifier : "id"
+    };
+</script>
+<script src="/js/commonV3.js"></script>
+<script src="/js/pageListGenerator-bundle.js"></script>
+</body>
+</html>

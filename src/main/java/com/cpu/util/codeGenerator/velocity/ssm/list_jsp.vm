@@ -1,0 +1,36 @@
+<!-- Author: Song -->
+<html>
+<head>
+    <title>${object} list</title>
+    <#include "../common/header.jsp"/>
+</head>
+<body>
+<div id="wrapper">
+    <div id="list"/>
+    <#include "../common/side.jsp"/>
+    <#include "../common/main.jsp"/>
+<script type="text/javascript">
+    var form_title = "${object}列表";
+    var pageNo = window.location.hash;
+    if(pageNo){
+        pageNo = pageNo.substring(1);
+    }
+    var pageParas = {
+        url:"/${object}/list",
+        addUrl:"/${object}/add",
+        editUrl:"/${object}/edit",
+        activePage :pageNo,
+        columnFilter  : [
+            #foreach($field in $fieldList)
+                {name:"${field.name}", alias:"${field.name}" #if(${field.name} == "id"),type:"hidden" #else #end} #if(${velocityCount} < ${fieldList.size()}),
+            #else #end
+            #end
+        ],
+        searchBar: false,
+        identifier : "id"
+    };
+</script>
+    <#include "../common/footer.jsp"/>
+</div>
+</body>
+</html>
